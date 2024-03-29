@@ -6,7 +6,7 @@
     <title>Webbshop - Produkter</title>
     <link rel="shortcut icon" href="favicon2.ico" type="favicon.ico" />
     <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/custom.css" /> 
     <link rel="stylesheet" href="css/product.css" />
   </head>
 
@@ -44,9 +44,24 @@
                 <a class="nav-link" href="om-oss.html">Om oss</a>
               </li>
             </ul>
+            <a class="btn btn-link border-0 position-relative" data-bs-toggle="collapse" href="#cart" role="button" height="50" aria-expanded="false" aria-controls="cart"><img src="cart1.png" alt="" height="30">
+            <span id="badge" class="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger"></span>
+            </a>
           </div>
         </div>
       </nav>
+      <div class="row">
+        <div class="col-md-8"></div>
+      <div class="collapse col-md-4" id="cart">
+            <div class="card card-body">
+              <div id="added"></div>
+              <div id="sum" class="mb-2"></div>
+              <div class="text-center">
+                <a class="btn btn-primary btn-sm" href="cart.html">Gå till kundvagn</a>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
     <div class="container pt-5">
       <!-- Produkerna listas här -->
@@ -70,7 +85,7 @@
     </div>
      </div>
   <script src="js/script.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/cart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
