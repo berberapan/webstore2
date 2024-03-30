@@ -44,10 +44,27 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         const cartItems = JSON.parse(localStorage.getItem('shopCart'))
         cartItems.forEach(item => {
-          sum += Number(item.price)
+          sum += Number(item.price * item.quantity)
         })
         return sum.toFixed(2)
       }
+    }
+
+    function addedItems() {
+      const cartItems = JSON.parse(localStorage.getItem('shopCart'))
+      if (cartItems === null) {
+        return
+      }
+      const cartList = document.getElementById('added')
+      cartList.textContent =  ""
+      cartItems.forEach((item, index) => {
+        const product = document.createElement('div')
+        product.innerHTML = `
+        <div id=${index} class="mb-2">
+          ${item.name}<br>Antal: ${item.quantity}<hr>
+        </div>`
+        cartList.appendChild(product)
+      })
     }
 
     function counter() {
@@ -55,8 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('badge').innerHTML = ""
       } else {
           const cartItems = JSON.parse(localStorage.getItem('shopCart'))
-          if (cartItems.length < 10) {
-            document.getElementById('badge').innerHTML = `${cartItems.length}`
+          const quantities = cartItems.map(item => item.quantity)
+          const quantity = quantities.reduce((acc, cv) => acc + cv)
+          if (quantity < 10) {
+            document.getElementById('badge').innerHTML = `${quantity}`
           } else {
             document.getElementById('badge').innerHTML = "9+" 
           }
@@ -76,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
   counter()
   sumCart()
+  addedItems()
   // Hantera klickhändelser
   document.addEventListener('click', function (event) {
     // Hämta produktinformation
@@ -86,9 +106,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.target.classList.contains('btn-order')) {
       event.preventDefault();
 
-      const shopItem = {
+      let shopItem = {
         name: productName,
-        price: productPrice
+        price: productPrice,
+        quantity: 1
       }
 
       if (localStorage.getItem('shopCart') === null){
@@ -97,12 +118,19 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
         counter()
         sumCart()
+        addedItems()
       } else {
         const shopCart = JSON.parse(localStorage.getItem('shopCart'))
-        shopCart.push(shopItem)
+        const checkMulti = shopCart.find(item => item.name === shopItem.name)
+        if (checkMulti) {
+          checkMulti.quantity += 1
+        } else {
+          shopCart.push(shopItem)
+        }        
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
         counter()
         sumCart()
+        addedItems()
       }
 
       /*
