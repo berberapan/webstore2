@@ -42,12 +42,36 @@
                   <a class="nav-link" href="om-oss.html">Om oss</a>
                 </li>
               </ul>
+              <a class="btn btn-link border-0 position-relative" data-bs-toggle="collapse" href="#cart" role="button" height="50" aria-expanded="false" aria-controls="cart"><img src="cart1.png" alt="" height="30">
+                <span id="badge" class="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger"></span>
+                </a>
             </div>
           </div>
         </nav>
+        <div class="row">
+            <div class="col-md-8"></div>
+          <div class="collapse col-md-4" id="cart">
+                <div class="card card-body">
+                  <div id="added"></div>
+                  <div id="sum"></div>
+                  <div class="text-center">
+                    <a class="btn btn-primary btn-sm" href="cart.html">Gå till kundvagn</a>
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
       <div class="container pt-5">
-      <p>test</p>
+       <h2 id="product-page" class="mb-2">Kundvagn</h2><br>
+      <div id="bodyAdded"></div>
+      <div class="row mb-2">
+        <div id="space"></div>
+      <div id="bodySum"></div>
+      </div>
+      <div class="text-center">
+          <a class="btn btn-primary" href="order.html" type="link" value="toOrder" id="goToOrder">Till Beställning</a>
+          <button class="btn btn-warning" type="clear" value="clearCart" id="clear">Rensa</button>
+      </div>
       </div>
 </body>
 <hr>
@@ -56,6 +80,6 @@
       Copyright &copy; <span id="cRyear"></span>
     </div>
   </footer>
-<script src="js/script.js"></script>
+<script src="js/cart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </html>

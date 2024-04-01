@@ -31,6 +31,7 @@ checkInput(addressInput, validAddress)
 // Redirect when closing modal in order.html.
 const modalID = document.getElementById('successModal')
 modalID.addEventListener('hidden.bs.modal', function(){
+    localStorage.clear('shopCart')
     location.replace("produkter.html")
 })
 
@@ -62,14 +63,18 @@ form.addEventListener("submit", function (event) {
         const email = document.getElementById("email").value;
         const address = document.getElementById("adress").value;
 
-        // Hämta produktinformation från URL-parametrarna
-        const urlParams = new URLSearchParams(window.location.search);
-        const productName = urlParams.get("product");
-        const productPrice = urlParams.get("price");
+        let productName = ""
+        let productPrice = 0
+        const cart = JSON.parse(localStorage.getItem('shopCart'))
+        cart.forEach(item => {
+            productName += `${item.name} x ${item.quantity} <br>`
+            productPrice += Number(item.price)
+        });
+        const price = productPrice.toFixed(2)
 
         // Fyll i modalfönstret med användarens uppgifter och produktinformation
-        document.getElementById("modalProductName").textContent = productName;
-        document.getElementById("modalProductPrice").textContent = `$${productPrice}`;
+        document.getElementById("modalProductName").innerHTML = productName;
+        document.getElementById("modalProductPrice").textContent = `$${price}`;
         document.getElementById("modalName").textContent = name;
         document.getElementById("modalPhone").textContent = phone;
         document.getElementById("modalEmail").textContent = email;

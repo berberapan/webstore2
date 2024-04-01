@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </div>
                   <div class="d-flex flex-column card-body product-button">
                     <p class="card-text">$${product.price}</p>
-                    <button class="btn btn-primary btn-order">Köp</button>
+                    <button id="buyButton" class="btn btn-primary btn-order">Köp</button>
                   </div>
                 </div>
             `;
@@ -37,65 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('Fetch error:', error);
     });
 
-    function sumAllProducts() {
-      let sum = 0
-      if (localStorage.getItem('shopCart') === null) {
-        return sum
-      } else {
-        const cartItems = JSON.parse(localStorage.getItem('shopCart'))
-        cartItems.forEach(item => {
-          sum += Number(item.price * item.quantity)
-        })
-        return sum.toFixed(2)
-      }
-    }
+    
 
-    function addedItems() {
-      const cartItems = JSON.parse(localStorage.getItem('shopCart'))
-      if (cartItems === null) {
-        return
-      }
-      const cartList = document.getElementById('added')
-      cartList.textContent =  ""
-      cartItems.forEach((item, index) => {
-        const product = document.createElement('div')
-        product.innerHTML = `
-        <div id=${index} class="mb-2">
-          ${item.name}<br>Antal: ${item.quantity}<hr>
-        </div>`
-        cartList.appendChild(product)
-      })
-    }
-
-    function counter() {
-      if (localStorage.getItem('shopCart') === null) {
-          document.getElementById('badge').innerHTML = ""
-      } else {
-          const cartItems = JSON.parse(localStorage.getItem('shopCart'))
-          const quantities = cartItems.map(item => item.quantity)
-          const quantity = quantities.reduce((acc, cv) => acc + cv)
-          if (quantity < 10) {
-            document.getElementById('badge').innerHTML = `${quantity}`
-          } else {
-            document.getElementById('badge').innerHTML = "9+" 
-          }
-      }
-    }
-
-    function sumCart() {
-      const getStorage = JSON.parse(localStorage.getItem('shopCart'))
-      if (getStorage === null) {
-        document.getElementById('sum').classList.add('text-center')
-        document.getElementById('sum').innerHTML = "Din kundvagn är tom."
-      } else {
-        document.getElementById('sum').classList.remove('text-center')
-        document.getElementById('sum').innerHTML = "<b>Summa</b>: " + `$${sumAllProducts()}`
-      }
-    }
-  
-  counter()
-  sumCart()
-  addedItems()
   // Hantera klickhändelser
   document.addEventListener('click', function (event) {
     // Hämta produktinformation
@@ -118,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
         counter()
         sumCart()
-        addedItems()
+        addedItemsCart()
       } else {
         const shopCart = JSON.parse(localStorage.getItem('shopCart'))
         const checkMulti = shopCart.find(item => item.name === shopItem.name)
@@ -130,22 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
         counter()
         sumCart()
-        addedItems()
+        addedItemsCart()
       }
-
-      /*
-      // Skapa en URL för beställningsformuläret med produktinformationen som query parametrar
-      const orderFormUrl = `order.html?product=${encodeURIComponent(
-        productName
-      )}&price=${encodeURIComponent(
-        productPrice
-      )}`;
-
-      // Omdirigera användaren till beställningsformuläret
-      window.location.href = orderFormUrl;
-      */
-
-      // Sätter produktinfo i offcanvas
     } else {
       document.getElementById('offcanvas-product-title').innerHTML = productName
       document.getElementById('offcanvas-product-description').innerHTML = productDescription
