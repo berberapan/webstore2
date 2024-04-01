@@ -10,7 +10,6 @@ function addRemove() {
         return
     }
     const numItems = items.length
-
     for (let i = 0; i < numItems; i++) {
         const btnMinus = document.getElementById(`${i}-minus`)
         const btnPlus = document.getElementById(`${i}-plus`)
@@ -20,7 +19,7 @@ function addRemove() {
             if (cart[i].quantity === 0) {
                 cart.splice(i, 1)
             }
-            if (numItems === 1) {
+            if (cart.length === 0) {
                 localStorage.clear('shopCart')
             } else {
                 localStorage.setItem('shopCart', JSON.stringify(cart))
@@ -110,7 +109,7 @@ function counter() {
     } else {
         const cartItems = JSON.parse(localStorage.getItem('shopCart'))
         const quantities = cartItems.map(item => item.quantity)
-        const quantity = quantities.reduce((acc, cv) => acc + cv)
+        const quantity = quantities.reduce((acc, cv) => acc + cv, 0)
         if (quantity < 10) {
           document.getElementById('badge').innerHTML = `${quantity}`
         } else {
