@@ -13,6 +13,7 @@ function addRemove() {
     for (let i = 0; i < numItems; i++) {
         const btnMinus = document.getElementById(`${i}-minus`)
         const btnPlus = document.getElementById(`${i}-plus`)
+        const btnRemove = document.getElementById(`${i}-remove`)
         btnMinus.addEventListener('click', function(){
             const cart = JSON.parse(localStorage.getItem('shopCart'))
             cart[i].quantity -= 1
@@ -30,6 +31,16 @@ function addRemove() {
             const cart = JSON.parse(localStorage.getItem('shopCart'))
             cart[i].quantity += 1
             localStorage.setItem('shopCart', JSON.stringify(cart))
+            initCart()
+        })
+        btnRemove.addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('shopCart'))
+            cart.splice(i, 1)
+            if (cart.length === 0) {
+                localStorage.clear('shopCart')
+            } else {
+                localStorage.setItem('shopCart', JSON.stringify(cart))
+            }
             initCart()
         })
     }
@@ -91,11 +102,17 @@ function addedItemsBody() {
       <div class="col-3">$${(item.price * item.quantity).toFixed(2)}
       </div>
       </div>
-      <div>
+      <div class="row">
+      <div class="col-9">
       Antal:
-      <button id="${index}-minus" class="btn-primary border-0">-</button>
+      <button id="${index}-minus" class="btn btn-primary border-0 btn-sm">-</button>
       ${item.quantity}
-      <button id="${index}-plus" class="btn-primary border-0">+</button>
+      <button id="${index}-plus" class="btn btn-primary border-0 btn-sm">+</button>
+      </div>
+      <div class="col-3">
+      <button id="${index}-remove" class="btn btn-link btn-sm"><img src="trash.svg"></button>
+      </div>
+      </div>
       <hr></hr>
       </div>`
       cartList.appendChild(product)
