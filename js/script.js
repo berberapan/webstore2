@@ -59,9 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const shopCart = []
         shopCart.push(shopItem)
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
-        counter()
-        sumCart()
-        addedItemsCart()
+        initCart()
       } else {
         const shopCart = JSON.parse(localStorage.getItem('shopCart'))
         const checkMulti = shopCart.find(item => item.name === shopItem.name)
@@ -71,9 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
           shopCart.push(shopItem)
         }        
         localStorage.setItem('shopCart', JSON.stringify(shopCart))
-        counter()
-        sumCart()
-        addedItemsCart()
+        initCart()
       }
     } else {
       document.getElementById('offcanvas-product-title').innerHTML = productName
@@ -82,4 +78,5 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+initCart()
 document.getElementById('cRyear').innerHTML = new Date().getFullYear();
